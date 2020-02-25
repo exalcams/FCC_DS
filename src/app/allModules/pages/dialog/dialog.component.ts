@@ -1,6 +1,6 @@
 import { Component, Inject, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatRadioChange } from '@angular/material';
 import { DSSConfiguration, CertificateClass, UserByPlant, AuthorityClass } from 'app/models/dss';
 import { DashboardService } from 'app/services/dashboard.service';
 import { MasterService } from 'app/services/master.service';
@@ -31,6 +31,7 @@ export class DialogComponent implements OnInit {
     CurrentDSSConfiguration: DSSConfiguration[] = [];
     selectedDocumentType: string;
     SelectOutPutType: string;
+    SelectSignedValue: number;
     constructor(
         public matDialogRef: MatDialogRef<DialogComponent>,
         @Inject(MAT_DIALOG_DATA) public DSSConfigurationData: DSSConfiguration,
@@ -41,13 +42,13 @@ export class DialogComponent implements OnInit {
     ) {
         // Set the defaults
         this.ConfigurationFormGroup = this.formBuilder.group({
-            // AutoSign: ['', Validators.required],
+            AutoSign: ['', Validators.required],
             DocumentType: ['', Validators.required],
             Config1: ['', Validators.required],
             Config2: ['', Validators.required],
             Config3: ['', Validators.required],
             Authority: ['', Validators.required],
-            CertificateName: ['', Validators.required],
+            CertificateName: ['',],
             ExpiryDate: ['', Validators.required],
             DisplayTitle1: ['', Validators.required],
             DisplayTitle2: ['']
@@ -55,21 +56,22 @@ export class DialogComponent implements OnInit {
         // this.CurrentDSSConfiguration = new DSSConfiguration();
         this.showExtraToFields = false;
     }
-    ResetControl(): void {
+    ResetControl(): void { 
         this.ConfigurationFormGroup.reset();
         Object.keys(this.ConfigurationFormGroup.controls).forEach(key => {
             this.ConfigurationFormGroup.get(key).markAsUntouched();
         });
     }
     ngOnInit(): void {
+        this.SelectSignedValue = 1;
         this.GetAllCertificateFromStore();
         this.GetAllAuthoritys();
        // console.log(this.DSSConfigurationData);
         if (this.DSSConfigurationData) {
             this.ConfigurationFormGroup.setValue({
-                // AutoSign: this.DSSConfigurationData.AUTOSIGN ? '1' : '0',
+                AutoSign: this.DSSConfigurationData.AUTOSIGN ? '1' : '0',
                 // SignedAuthority: this.DSSConfigurationData.AUTHORITY,
-                DocumentType: this.DSSConfigurationData.CONFIG2,
+                DocumentType: this.DSSConfigurationData.DOCTYPE,
                 Config1: this.DSSConfigurationData.CONFIG1,
                 Config2: this.DSSConfigurationData.CONFIG2,
                 Config3: this.DSSConfigurationData.CONFIG3,
@@ -82,7 +84,7 @@ export class DialogComponent implements OnInit {
         } else {
             this.DSSConfigurationData = new DSSConfiguration();
             this.ResetControl();
-            //  this.ConfigurationFormGroup.get('AutoSign').patchValue('1');
+             this.ConfigurationFormGroup.get('AutoSign').patchValue('1');
         }
         console.log(this.DSSConfigurationData);
     }
@@ -171,15 +173,20 @@ export class DialogComponent implements OnInit {
     YesClicked(): void {
         if (this.ConfigurationFormGroup.valid) {
             const expDate = this.datepipe.transform(this.ConfigurationFormGroup.get('ExpiryDate').value, 'dd-MM-yyyy');
-            // this.DSSConfigurationData.DOCTYPE = this.ConfigurationFormGroup.get('DocumentType').value;
+            this.DSSConfigurationData.DOCTYPE = this.ConfigurationFormGroup.get('DocumentType').value;
             // this.DSSConfigurationData.Plant_ID = this.ConfigurationFormGroup.get('Plant').value;
             this.DSSConfigurationData.CONFIG1 = this.ConfigurationFormGroup.get('Config1').value;
             this.DSSConfigurationData.CONFIG2 = this.ConfigurationFormGroup.get('Config2').value;
             this.DSSConfigurationData.CONFIG3 = this.ConfigurationFormGroup.get('Config3').value;
-            this.DSSConfigurationData.AUTOSIGN = true;
+            this.DSSConfigurationData.AUTOSIGN = this.ConfigurationFormGroup.get('AutoSign').value === '1'?true:false;
             // this.DSSConfigurationData.AUTHORITY = this.ConfigurationFormGroup.get('SignedAuthority').value;
-
+            if(this.ConfigurationFormGroup.get('AutoSign').value == '1'){
             this.DSSConfigurationData.CERT_NAME = this.ConfigurationFormGroup.get('CertificateName').value;
+            }
+            if(this.ConfigurationFormGroup.get('AutoSign').value == '0'){
+            this.DSSConfigurationData.CERT_NAME = "Dongle";
+            }
+            
             this.DSSConfigurationData.CERT_EX_DT = this.datepipe.transform(this.ConfigurationFormGroup.get('ExpiryDate').value, 'yyyy-MM-dd HH:mm:ss');
             this.DSSConfigurationData.AUTHORITY = this.ConfigurationFormGroup.get('Authority').value;
             this.DSSConfigurationData.DISPLAYTITLE1 = this.ConfigurationFormGroup.get('DisplayTitle1').value;
@@ -196,7 +203,13 @@ export class DialogComponent implements OnInit {
     CloseClicked(): void {
         this.matDialogRef.close(null);
     }
-    GetDocumentType(documentType: string): void {
-        this.ConfigurationFormGroup.controls['Config1'].setValue(documentType);
+    // GetDocumentType(documentType: string): void {
+    //     this.ConfigurationFormGroup.controls['Config1'].setValue(documentType);
+    // }
+    GetSignvalue(mrChange: MatRadioChange){
+    //  alert(signValue);
+        this.SelectSignedValue = Number(mrChange.value);
+       // alert(this.SelectSignedValue);
+
     }
 }

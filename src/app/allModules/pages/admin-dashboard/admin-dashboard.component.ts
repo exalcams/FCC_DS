@@ -191,7 +191,7 @@ export class AdminDashboardComponent implements OnInit {
     this.tab2 = false;
     this.tab3 = false;
     this.tab4 = false;
-    // this.tab5 = false;
+    this.tab5 = false;
     this.GetAllSignedDocument();
     this.ResetControl();
   }
@@ -200,7 +200,7 @@ export class AdminDashboardComponent implements OnInit {
     this.tab2 = true;
     this.tab3 = false;
     this.tab4 = false;
-    // this.tab5 = false;
+    this.tab5 = false;
     this.GetAllConfigurations();
     this.ResetControl();
   }
@@ -209,7 +209,7 @@ export class AdminDashboardComponent implements OnInit {
     this.tab2 = false;
     this.tab3 = true;
     this.tab4 = false;
-    // this.tab5 = false;
+    this.tab5 = false;
     this.GetAllExpiredCertificates();
     this.ResetControl();
   }
@@ -218,19 +218,19 @@ export class AdminDashboardComponent implements OnInit {
     this.tab2 = false;
     this.tab3 = false;
     this.tab4 = true;
-    // this.tab5 = false;
+    this.tab5 = false;
     this.GetAllErrorDocuments();
     this.ResetControl();
   }
-  // tabfive() {
-  //   this.tab1 = false;
-  //   this.tab2 = false;
-  //   this.tab3 = false;
-  //   this.tab4 = false;
-  //   this.tab5 = true;
-  //   this.GetAllUnSignedDocument();
-  //   this.ResetControl();
-  // }
+  tabfive() {
+    this.tab1 = false;
+    this.tab2 = false;
+    this.tab3 = false;
+    this.tab4 = false;
+    this.tab5 = true;
+    this.GetAllUnSignedDocument();
+    this.ResetControl();
+  }
   ResetControl(): void {
     this.getDocument = new GetDocument();
     this.documentFormGroup.reset();
