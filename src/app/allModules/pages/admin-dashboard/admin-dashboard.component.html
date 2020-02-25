@@ -20,7 +20,7 @@
             </div>
           </div>
 
-          <!-- <div fxFlex class="TileClass armyBgColor" (click)="tabfive()">
+          <div fxFlex class="TileClass armyBgColor" (click)="tabfive()">
             <div class="container" fxLayout fxLayoutAlign="center" fxLayoutGap="10px">
               <div fxFlex="70%">
                 <h2 class="titleClass">
@@ -33,7 +33,7 @@
                 </h2>
               </div>
             </div>
-          </div> -->
+          </div>
 
           <div fxFlex class="TileClass primaryBgColor" (click)="tabtwo()">
             <div class="container" fxLayout fxLayoutAlign="center" fxLayoutGap="10px">
@@ -303,11 +303,11 @@
 
       <!--Un Signed documnets part starts-->
 
-      <!-- <div class="content" fxLayout="column" *ngIf="tab5">
+      <div class="content" fxLayout="column" *ngIf="tab5">
         <form class="mat-card formGroupStyle" autocomplete="off" fxFlex name="form" [formGroup]="documentFormGroup"
           novalidate>
           <div FxLayout="row" class="formRowStyle" fxLayout.xs="column">
-            <div fxFlex>
+            <!-- <div fxFlex>
               <mat-form-field>
                 <mat-select style="width:180px" placeholder="Document Type" formControlName="DocumentType"
                   (selectionChange)="DocumentTypeIDSelected($event)">
@@ -321,7 +321,7 @@
                   Document type is required
                 </mat-error>
               </mat-form-field>
-            </div>
+            </div> -->
             <div fxFlex="23%">
               <mat-form-field>
                 <input matInput placeholder="From date" [matDatepicker]="picker1" formControlName="FromDate"
@@ -421,7 +421,7 @@
             <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
           </div>
         </mat-card>
-      </div> -->
+      </div>
 
       <!--Un Signed documnets part ends-->
 

@@ -205,7 +205,7 @@ export class DashboardComponent implements OnInit {
     this.tab2 = false;
     this.tab3 = false;
     this.tab4 = false;
-    // this.tab5 = false;
+    this.tab5 = false;
     this.GetAllSignedDocumentsByUser(this.UserName);
     this.ResetControl();
   }
@@ -214,7 +214,7 @@ export class DashboardComponent implements OnInit {
     this.tab2 = true;
     this.tab3 = false;
     this.tab4 = false;
-    // this.tab5 = false;
+    this.tab5 = false;
     this.GetAllConfigurationsByUser(this.UserName);
     this.ResetControl();
   }
@@ -223,7 +223,7 @@ export class DashboardComponent implements OnInit {
     this.tab2 = false;
     this.tab3 = true;
     this.tab4 = false;
-    // this.tab5 = false;
+    this.tab5 = false;
     this.GetAllExpiredCertificatesByUser(this.UserName);
     this.ResetControl();
   }
@@ -232,19 +232,19 @@ export class DashboardComponent implements OnInit {
     this.tab2 = false;
     this.tab3 = false;
     this.tab4 = true;
-    // this.tab5 = false;
+    this.tab5 = false;
     this.GetAllErrorDocumentsByUser(this.UserName);
     this.ResetControl();
   }
-  // tabfive(): void {
-  //   this.tab1 = false;
-  //   this.tab2 = false;
-  //   this.tab3 = false;
-  //   this.tab4 = false;
-  //   this.tab5 = true;
-  //   this.GetAllUnSignedDocumentsByUser(this.UserName);
-  //   this.ResetControl();
-  // }
+  tabfive(): void {
+    this.tab1 = false;
+    this.tab2 = false;
+    this.tab3 = false;
+    this.tab4 = false;
+    this.tab5 = true;
+    this.GetAllUnSignedDocumentsByUser(this.UserName);
+    this.ResetControl();
+  }
 
   ResetControl(): void {
     this.getDocument = new GetDocument();
